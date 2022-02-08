@@ -5,6 +5,7 @@ import App from "./App";
 import ExpenseContextProvider from "./components/Context";
 import { BrowserRouter } from "react-router-dom";
 
+
 ReactDOM.render(
 	<BrowserRouter>
 		<ExpenseContextProvider>

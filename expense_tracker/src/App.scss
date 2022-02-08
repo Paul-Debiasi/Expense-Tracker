@@ -1,3 +1,61 @@
-.App {
-	text-align: center;
+@import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+
+.App{
+  margin: 0 10%;
+}
+.header {
+  text-align: center;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.option,
+.category,
+.amount, .date{
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.option {
+  border: 2px solid #0b5ed7;
+}
+
+.category {
+  border: 2px solid #157347;
+}
+
+.amount {
+	border: 2px solid red;
+	
+}
+
+.date{
+	border: 2px solid rgb(184, 17, 133);
+
+}
+
+.showData{
+  margin-top: 50px;
+  height: 80px;
+  
+}
+
+.showData > section > *{
+  border: 2px solid rgb(146, 24, 146);
+  width: 100px;
+}
+
+.littleTable{
+  height: 100%;
+}
+
+.col{
+  line-height: 75px;
+  border: 1px solid black;
+
+}
+
+button{
+  height: fit-content;
 }
