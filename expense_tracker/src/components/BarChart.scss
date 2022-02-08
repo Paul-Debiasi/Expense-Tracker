@@ -1,0 +1,10 @@
+.BarChart {
+	svg {
+		width: 800px;
+		height: 300px;
+		overflow: visible;
+		.grid1 {
+			color: rgba(0, 0, 0, 0.096);
+		}
+	}
+}
