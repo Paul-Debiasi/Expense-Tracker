@@ -34,19 +34,6 @@ export default function BarChart({ entries }) {
 
 	const filteredChart = chartExpenses.filter((item) => item && true);
 
-	// let dataArr = [filteredChart[0].category];
-	// let otherArr = [];
-	// filteredChart.forEach((item) => {
-	// 	if (dataArr.includes(item.category)) {
-	// 		dataArr.push(item.category);
-	// 		otherArr.push(item.amount);
-	// 	} else {
-	// 		dataArr = [item.category];
-	// 	}
-	// });
-	// console.log(dataArr);
-	// console.log(otherArr);
-
 	const amountCount = filteredChart.reduce((amCount, item) => {
 		const countedAmount = amCount.find(
 			(amount) => amount.category === item.category
@@ -76,7 +63,7 @@ export default function BarChart({ entries }) {
 			.range([0, h]);
 		const xAxis = d3.axisBottom(xScale).ticks((d) => d.category);
 		const color = d3.scaleOrdinal().range([d3.schemeSet2])();
-		const yAxis = d3.axisLeft(yScale);
+		const yAxis = d3.axisRight(yScale);
 		svg
 			.select(".x-axis")
 			.style("transform", "translateY(300px)")
@@ -84,7 +71,7 @@ export default function BarChart({ entries }) {
 			.style("font", "16px times");
 		svg
 			.select(".y-axis")
-			.style("transform", "translateX(0px)")
+			.style("transform", "translateX(600px)")
 			.call(yAxis)
 			.style("font", "16px times");
 		svg
