@@ -11,7 +11,7 @@ import { Switch, Route, useLocation, Link } from "react-router-dom";
 export default function Expenses() {
 	const { expense } = useContext(ExpenseContext);
 
-	const calcBudget = expense.reduce((acc, item) => {
+	const calcBudget = expense?.reduce((acc, item) => {
 		if (item.expenses) {
 			return (acc -= item.amount);
 		} else if (!item.expenses) {

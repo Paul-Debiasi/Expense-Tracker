@@ -7,7 +7,7 @@ export const ExpenseContext = createContext();
 export default function ExpenseContextProvider({ children }) {
 	const initialExpenses = JSON.parse(
 		// window.localStorage.getItem("expense") || "[]",
-		window.localStorage.getItem("expense") 
+		window.localStorage.getItem("expense") || '[]'
 	);
 
 	const [expense, setExpense] = useState(initialExpenses);
