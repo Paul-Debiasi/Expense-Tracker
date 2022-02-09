@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { ExpenseContext } from "./Context";
 import * as d3 from "d3";
+import { Link } from "react-router-dom";
 
 export default function PieChart({ tot }) {
 	const [data, setData] = useState([]);
@@ -72,13 +73,14 @@ export default function PieChart({ tot }) {
 			.style("font", "16spx times")
 			.attr("fill", "black")
 			.text(function (d) {
-				const per = `${Math.trunc((d.data.amount * 100) / tot)} %`;
+				const per = `${Math.trunc((d.data.amount * 100) / tot)}%`;
 				return per;
 			});
 		//  ;
 	}, [expense]);
 	return (
 		<div>
+			<Link to={"/bar"}> Bar chart</Link>
 			<svg ref={svgRef}></svg>
 		</div>
 	);
