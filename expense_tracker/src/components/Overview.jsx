@@ -88,9 +88,11 @@ export default function Overview() {
   return (
     <div>
       <section className="header">
-        <Button variant="primary" size="lg" active className="mt-5">
-          Expenses
-        </Button>
+        <Link to="/expenses">
+          <Button variant="primary" size="lg" active className="mt-5">
+            Expenses
+          </Button>
+        </Link>
         <h1 className="display-1">Dashboard</h1>
       </section>
       <section className="d-flex justify-content-center  mt-5">
