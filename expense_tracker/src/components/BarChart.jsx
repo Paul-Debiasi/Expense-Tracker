@@ -66,8 +66,6 @@ export default function BarChart({
 	}, [expense]);
 	useEffect(() => {
 		const DrawChart = async () => {
-			setChartData([...amountCount]);
-
 			const DrawChart = () => {
 				const svg = d3.select(svgRef.current);
 				const findMax = chartData.map((item) => item.amount);
