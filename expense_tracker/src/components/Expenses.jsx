@@ -12,9 +12,9 @@ export default function Expenses() {
 	const { expense } = useContext(ExpenseContext);
 
 	const calcBudget = expense?.reduce((acc, item) => {
-		if (item.expenses) {
+		if (item.expenses === true) {
 			return (acc -= item.amount);
-		} else if (!item.expenses) {
+		} else if (item.expenses === false) {
 			return (acc += item.amount);
 		}
 		return acc;
