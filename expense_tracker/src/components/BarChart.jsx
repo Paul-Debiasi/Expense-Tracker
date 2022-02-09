@@ -61,6 +61,7 @@ export default function BarChart({ entries }) {
 	const w = 600;
 	const h = 300;
 	useEffect(() => {
+
 		const DrawChart = async () => {
 			setChartData([...amountCount]);
 			const svg = d3.select(svgRef.current);
@@ -111,6 +112,53 @@ export default function BarChart({ entries }) {
 
 		// debounce(DrawChart);
 		DrawChart();
+
+		setChartData([...amountCount]);
+		const svg = d3.select(svgRef.current);
+		const findMax = chartData.map((item) => item.amount);
+		let max = Math.max(...findMax);
+		const xScale = d3
+			.scaleBand()
+			.domain(chartData.map((item, index) => index))
+			.range([0, w])
+			.padding(0.5);
+		const yScale = d3
+			.scaleLinear()
+			.domain([max + 100, 0])
+			.range([0, h]);
+		const xAxis = d3.axisBottom(xScale).ticks((d) => d.category);
+		const color = d3.scaleOrdinal().range([d3.schemeSet2])();
+		const yAxis = d3.axisRight(yScale);
+		svg
+			.select(".x-axis")
+			.style("transform", "translateY(300px)")
+			.call(xAxis)
+			.style("font", "16px times");
+		svg
+			.select(".y-axis")
+			.style("transform", "translateX(600px)")
+			.call(yAxis)
+			.style("font", "16px times");
+		svg
+			.append("g")
+			.attr("class", "grid1")
+			.attr("transform", `translate(0,${h})`)
+			.call(d3.axisBottom(xScale).tickSize(-h).tickFormat(""));
+		svg
+			.append("g")
+			.attr("class", "grid1")
+			.call(d3.axisRight(yScale).tickSize(w).tickFormat(""));
+		svg
+			.selectAll(".bar")
+			.data(chartData.map((item) => item.amount))
+			.join("rect")
+			.attr("class", "bar")
+			.attr("x", (item, indx) => xScale(indx))
+			.attr("y", yScale)
+			.attr("width", xScale.bandwidth())
+			.attr("height", (val) => h - yScale(val))
+			.attr("fill", (d, i) => color[i]);
+
 	}, [expense]);
 	return (
 		<div className='BarChart'>

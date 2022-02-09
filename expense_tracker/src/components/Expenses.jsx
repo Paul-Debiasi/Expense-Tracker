@@ -20,6 +20,8 @@ export default function Expenses() {
 		return acc;
 	}, 0);
 
+	console.log(calcBudget);
+
 	const calExpenses = expense.reduce((acc, item) => {
 		if (item.expenses) {
 			return (acc += item.amount);
