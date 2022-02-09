@@ -81,6 +81,13 @@ function App() {
 				amount: 1000,
 				expenses: true,
 			},
+			{
+				id: uuidv4(),
+				timing: timing,
+				category: "Other",
+				amount: 1000,
+				expenses: false,
+			},
 		]);
 	}, []);
 	console.log("Expenses", expense);

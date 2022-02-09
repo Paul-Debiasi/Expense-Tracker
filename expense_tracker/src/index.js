@@ -6,10 +6,10 @@ import ExpenseContextProvider from "./components/Context";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-	<BrowserRouter>
-		<ExpenseContextProvider>
+	<ExpenseContextProvider>
+		<BrowserRouter>
 			<App />
-		</ExpenseContextProvider>
-	</BrowserRouter>,
+		</BrowserRouter>
+	</ExpenseContextProvider>,
 	document.getElementById("root")
 );

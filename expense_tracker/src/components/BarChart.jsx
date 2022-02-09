@@ -1,8 +1,12 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useFrame, useState, useRef, useEffect } from "react";
 import { ExpenseContext } from "./Context";
 import "./BarChart.scss";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
+import { BsFillHouseFill } from "react-icons/bs";
+import { AiFillCar } from "react-icons/ai";
+import { MdLocalGroceryStore } from "react-icons/md";
+import { FaUmbrellaBeach } from "react-icons/fa";
 
 const useResizeObserver = (ref) => {
 	const [dimensions, setDimensions] = useState(null);
@@ -34,10 +38,18 @@ const createDebouncer = () => {
 };
 const debounce = createDebouncer();
 
-export default function BarChart({ entries }) {
+export default function BarChart({
+	entries,
+	tot,
+	other,
+	car,
+	house,
+	groceries,
+	leisure,
+}) {
 	const [chartData, setChartData] = useState([]);
 	const svgRef = useRef();
-	const { expense } = useContext(ExpenseContext);
+	const { expense, show } = useContext(ExpenseContext);
 
 	const chartExpenses = expense.map((item) => {
 		return item.expenses
@@ -60,9 +72,12 @@ export default function BarChart({ entries }) {
 	console.log(amountCount);
 	const w = 600;
 	const h = 300;
+
 	useEffect(() => {
-		const DrawChart = async () => {
-			setChartData([...amountCount]);
+		setChartData([...amountCount]);
+	}, [expense]);
+	useEffect(() => {
+		const DrawChart = () => {
 			const svg = d3.select(svgRef.current);
 			const findMax = chartData.map((item) => item.amount);
 			let max = Math.max(...findMax);
@@ -76,7 +91,9 @@ export default function BarChart({ entries }) {
 				.domain([max + 100, 0])
 				.range([0, h]);
 			const xAxis = d3.axisBottom(xScale).ticks((d) => d.category);
-			const color = d3.scaleOrdinal().range([d3.schemeSet2])();
+			const color = d3
+				.scaleOrdinal()
+				.range(["#0d6efd ", "#dc3545 ", "#198754", "#ffc107 ", "#adb5bd"]);
 			const yAxis = d3.axisLeft(yScale);
 			svg
 				.select(".x-axis")
@@ -106,12 +123,14 @@ export default function BarChart({ entries }) {
 				.attr("y", yScale)
 				.attr("width", xScale.bandwidth())
 				.attr("height", (val) => h - yScale(val))
-				.attr("fill", (d, i) => color[i]);
+				.attr("fill", (d, i) => color([i]));
 		};
 
 		// debounce(DrawChart);
 		DrawChart();
-	}, [expense]);
+
+		console.log("Barchart show", show);
+	}, [chartData]);
 	return (
 		<div className='BarChart'>
 			Bar Chart
@@ -120,6 +139,28 @@ export default function BarChart({ entries }) {
 				<g className='x-axis' />
 				<g className='y-axis' />
 			</svg>
+			<div className='detailsBar'>
+				<ul>
+					<li>
+						<AiFillCar />
+						{car} $
+					</li>
+					<li>
+						{" "}
+						<BsFillHouseFill />
+						{house} $
+					</li>
+					<li>
+						<MdLocalGroceryStore />
+						{groceries} $
+					</li>
+					<li>
+						<FaUmbrellaBeach />
+						{leisure} $
+					</li>
+					<li>{`Other ${other} $`}</li>
+				</ul>
+			</div>
 		</div>
 	);
 }

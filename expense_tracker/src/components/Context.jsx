@@ -8,13 +8,14 @@ export default function ExpenseContextProvider({ children }) {
 	);
 
 	const [expense, setExpense] = useState(initialExpenses);
+	const [show, setShow] = useState(false);
 
 	useEffect(() => {
 		window.localStorage.setItem("expense", JSON.stringify(expense));
 	}, [expense]);
 
 	return (
-		<ExpenseContext.Provider value={{ expense, setExpense }}>
+		<ExpenseContext.Provider value={{ expense, setExpense, show, setShow }}>
 			{children}
 		</ExpenseContext.Provider>
 	);
