@@ -21,6 +21,13 @@ function App() {
 			{
 				id: uuidv4(),
 				timing: timing,
+				category: "House",
+				amount: 400,
+				expenses: true,
+			},
+			{
+				id: uuidv4(),
+				timing: timing,
 				category: "Car",
 				amount: 70,
 				expenses: true,
@@ -74,7 +81,6 @@ function App() {
 				amount: 80,
 				expenses: false,
 			},
-
 			{
 				id: uuidv4(),
 				timing: timing,
@@ -82,12 +88,19 @@ function App() {
 				amount: 1000,
 				expenses: true,
 			},
+			{
+				id: uuidv4(),
+				timing: timing,
+				category: "Salary",
+				amount: 3000,
+				expenses: false,
+			},
 		]);
 	}, []);
 	console.log("Expenses", expense);
 	return (
 		<div className='App'>
-			  <Overview />
+			<Overview />
 			<Expenses />
 		</div>
 	);
