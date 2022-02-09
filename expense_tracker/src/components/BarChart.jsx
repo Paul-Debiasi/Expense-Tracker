@@ -66,8 +66,6 @@ export default function BarChart({
 	}, [expense]);
 	useEffect(() => {
 		const DrawChart = async () => {
-			setChartData([...amountCount]);
-
 			const DrawChart = () => {
 				const svg = d3.select(svgRef.current);
 				const findMax = chartData.map((item) => item.amount);
@@ -116,52 +114,6 @@ export default function BarChart({
 					.attr("height", (val) => h - yScale(val))
 					.attr("fill", (d, i) => color([i]));
 			};
-
-			setChartData([...amountCount]);
-			const svg = d3.select(svgRef.current);
-			const findMax = chartData.map((item) => item.amount);
-			let max = Math.max(...findMax);
-			const xScale = d3
-				.scaleBand()
-				.domain(chartData.map((item, index) => index))
-				.range([0, w])
-				.padding(0.5);
-			const yScale = d3
-				.scaleLinear()
-				.domain([max + 100, 0])
-				.range([0, h]);
-			const xAxis = d3.axisBottom(xScale).ticks((d) => d.category);
-			const color = d3.scaleOrdinal().range([d3.schemeSet2])();
-			const yAxis = d3.axisRight(yScale);
-			svg
-				.select(".x-axis")
-				.style("transform", "translateY(300px)")
-				.call(xAxis)
-				.style("font", "16px times");
-			svg
-				.select(".y-axis")
-				.style("transform", "translateX(600px)")
-				.call(yAxis)
-				.style("font", "16px times");
-			svg
-				.append("g")
-				.attr("class", "grid1")
-				.attr("transform", `translate(0,${h})`)
-				.call(d3.axisBottom(xScale).tickSize(-h).tickFormat(""));
-			svg
-				.append("g")
-				.attr("class", "grid1")
-				.call(d3.axisRight(yScale).tickSize(w).tickFormat(""));
-			svg
-				.selectAll(".bar")
-				.data(chartData.map((item) => item.amount))
-				.join("rect")
-				.attr("class", "bar")
-				.attr("x", (item, indx) => xScale(indx))
-				.attr("y", yScale)
-				.attr("width", xScale.bandwidth())
-				.attr("height", (val) => h - yScale(val))
-				.attr("fill", (d, i) => color[i]);
 		};
 		DrawChart();
 	}, [chartData]);
@@ -169,7 +121,7 @@ export default function BarChart({
 	return (
 		<div className='BarChart'>
 			Bar Chart
-			<Link to={"/"}> Pie chart</Link>
+			<Link to={"/expenses"}> Pie chart</Link>
 			<svg ref={svgRef}>
 				<g className='x-axis' />
 				<g className='y-axis' />
