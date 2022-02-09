@@ -26,17 +26,6 @@ const useResizeObserver = (ref) => {
 	return dimensions;
 };
 
-const createDebouncer = () => {
-	let timeout = null;
-	return (callback) => {
-		if (timeout) clearTimeout(timeout);
-		timeout = setTimeout(() => {
-			callback();
-			clearTimeout(timeout);
-		}, 500);
-	};
-};
-const debounce = createDebouncer();
 
 export default function BarChart({
 	entries,
@@ -76,8 +65,10 @@ export default function BarChart({
 	useEffect(() => {
 		setChartData([...amountCount]);
 	}, [expense]);
+
 	useEffect(() => {
 		const DrawChart = () => {
+			setChartData([...amountCount]);
 			const svg = d3.select(svgRef.current);
 			const findMax = chartData.map((item) => item.amount);
 			let max = Math.max(...findMax);
@@ -126,11 +117,13 @@ export default function BarChart({
 				.attr("fill", (d, i) => color([i]));
 		};
 
-		// debounce(DrawChart);
+		
 		DrawChart();
 
-		console.log("Barchart show", show);
 	}, [chartData]);
+
+		
+
 	return (
 		<div className='BarChart'>
 			Bar Chart

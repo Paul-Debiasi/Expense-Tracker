@@ -1,6 +1,7 @@
 import "./App.scss";
 import { useContext, useEffect } from "react";
 import { ExpenseContext } from "./components/Context";
+import Overview from "./components/Overview";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import Expenses from "./components/Expenses";
@@ -15,6 +16,13 @@ function App() {
 				timing: timing,
 				category: "House",
 				amount: 800,
+				expenses: true,
+			},
+			{
+				id: uuidv4(),
+				timing: timing,
+				category: "House",
+				amount: 400,
 				expenses: true,
 			},
 			{
@@ -73,7 +81,6 @@ function App() {
 				amount: 80,
 				expenses: false,
 			},
-
 			{
 				id: uuidv4(),
 				timing: timing,
@@ -86,6 +93,8 @@ function App() {
 				timing: timing,
 				category: "Other",
 				amount: 1000,
+				category: "Salary",
+				amount: 3000,
 				expenses: false,
 			},
 		]);
@@ -93,6 +102,7 @@ function App() {
 	console.log("Expenses", expense);
 	return (
 		<div className='App'>
+			<Overview />
 			<Expenses />
 		</div>
 	);
