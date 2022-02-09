@@ -6,6 +6,7 @@ import { BsFillHouseFill } from "react-icons/bs";
 import { AiFillCar } from "react-icons/ai";
 import { MdLocalGroceryStore } from "react-icons/md";
 import { FaUmbrellaBeach } from "react-icons/fa";
+import { Switch, Route, useLocation, Link } from "react-router-dom";
 
 export default function Expenses() {
 	const { expense } = useContext(ExpenseContext);
@@ -94,10 +95,15 @@ export default function Expenses() {
 				</h3>
 			</div>
 
-			<div className='ExpensesChart'>
-				<PieChart tot={calExpenses} />
-				<BarChart entries={calEntries} />
-			</div>
+			<div className='ExpensesChart'></div>
+			<Switch>
+				<Route exact path='/'>
+					<PieChart tot={calExpenses} />
+				</Route>
+				<Route exact path='/bar'>
+					<BarChart entries={calEntries} />
+				</Route>
+			</Switch>
 
 			<div className='detailsReview'>
 				<ul>
