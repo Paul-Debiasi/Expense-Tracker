@@ -32,9 +32,6 @@ import EntryList from "./EntryList";
 
 export default function Overview() {
   const { expense, setExpense } = useContext(ExpenseContext);
-
-  // const timing = moment().format("LLLL");
-
   // set the user selected category from the dropDown menu
   const [categorySelected, setCategorySelected] = useState("Category");
   // set the state when the user select the category "Just to change the display name of the dropDown menu"
@@ -183,7 +180,6 @@ export default function Overview() {
             id="formControlDisabled"
             type="text"
             onChange={(e) => setAmount(Number(e.target.value))}
-            // disabled={option !== "Income"}
           />
         </div>
         <MDBBtn
@@ -197,7 +193,6 @@ export default function Overview() {
               category: categorySelected,
               expenses: isExpenses,
             })}
-            // setExpense([...expense, ...state])
             
         }
           disabled={!(amount !== 0)}
