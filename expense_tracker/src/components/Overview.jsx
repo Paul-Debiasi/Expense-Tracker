@@ -65,7 +65,7 @@ export default function Overview() {
     
   }, [state]);
 
-  let timing = moment().format("DD.MM.YYYY, hh:hhA");
+  let timing = moment().format("DD.MM.YYYY");
 
   console.log('Expenses', expense);
 
@@ -184,7 +184,7 @@ export default function Overview() {
             label={"Amount"}
             id="formControlDisabled"
             type="text"
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => setAmount(Number(e.target.value))}
             // disabled={option !== "Income"}
           />
         </div>
@@ -198,9 +198,12 @@ export default function Overview() {
               expenses: isExpenses,
             });
           }}
+
+          disabled={!(amount !== 0)}
         >
           Add
         </MDBBtn>
+
       </section>
       <section className="container">
         {state.map((item, idx) => {
