@@ -2,11 +2,22 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { ExpenseContext } from "./Context";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
+import { BsFillHouseFill } from "react-icons/bs";
+import { AiFillCar } from "react-icons/ai";
+import { MdLocalGroceryStore } from "react-icons/md";
+import { FaUmbrellaBeach } from "react-icons/fa";
 
-export default function PieChart({ tot }) {
+export default function PieChart({
+	tot,
+	other,
+	car,
+	house,
+	groceries,
+	leisure,
+}) {
 	const [data, setData] = useState([]);
 	const svgRef = useRef();
-	const { expense } = useContext(ExpenseContext);
+	const { expense, setShow } = useContext(ExpenseContext);
 
 	const mappedExpenses = expense.map((item) => {
 		return item.expenses
@@ -43,7 +54,10 @@ export default function PieChart({ tot }) {
 			.attr("margin-top", 50);
 		const pieData = d3.pie().value((item) => item.amount)(amountCount);
 
-		const color = d3.scaleOrdinal().range([d3.schemeSet2])();
+		// const color = d3.scaleOrdinal().range([d3.schemeSet2])();
+		const color = d3
+			.scaleOrdinal()
+			.range(["#0d6efd ", "#dc3545 ", "#198754", "#ffc107 ", "#adb5bd"]);
 
 		const label = d3.arc().outerRadius(radius).innerRadius(60);
 
@@ -53,7 +67,7 @@ export default function PieChart({ tot }) {
 			.join("path")
 			.attr("d", arcGenerator)
 			.attr("class", "deviceArc")
-			.attr("fill", (d, i) => color[i])
+			.attr("fill", (d, i) => color([i]))
 			.attr("transform", "translate(" + w / 2 + "," + h / 2 + ")")
 			.attr("id", (d, i) => "deviceArc" + i) //Unique id for each slice
 			.attr("stroke", "white")
@@ -80,8 +94,33 @@ export default function PieChart({ tot }) {
 	}, [expense]);
 	return (
 		<div>
-			<Link to={"/bar"}> Bar chart</Link>
+			<Link to={"/bar"} onClick={() => setShow(true)}>
+				{" "}
+				Bar chart
+			</Link>
 			<svg ref={svgRef}></svg>
+			<div className='detailsPie'>
+				<ul>
+					<li>
+						<AiFillCar />
+						{car} $
+					</li>
+					<li>
+						{" "}
+						<BsFillHouseFill />
+						{house} $
+					</li>
+					<li>
+						<MdLocalGroceryStore />
+						{groceries} $
+					</li>
+					<li>
+						<FaUmbrellaBeach />
+						{leisure} $
+					</li>
+					<li>{`Other ${other} $`}</li>
+				</ul>
+			</div>
 		</div>
 	);
 }

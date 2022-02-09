@@ -13,14 +13,17 @@ function EntryList() {
     alert("Edit Item here..."); // for testing purpose
   };
 
-  const handleDelete = () => {
-    alert("[x] - Item deleted."); // for testing purpose
-    //setExpense();
+  const handleDelete = (idx) => {
+    // alert("[x] - Item deleted."); // for testing purpose
+    const oldData = [...expense];
+    oldData.splice(idx, 1);
+    setExpense([...oldData]);
   };
+
   console.log("EntryList before rendering");
   return (
     <table>
-      {expense.reverse().map(({ id, timing, category, amount, expenses }) => (
+      {expense.map(({ id, timing, category, amount, expenses }, idx) => (
         <tr key={id}>
           <td>{timing}</td>
           <td className="left">{category}</td>
@@ -35,7 +38,10 @@ function EntryList() {
             <button onClick={handleEdit} className="btn-entry btn-edit">
               <VscEdit />
             </button>
-            <button onClick={handleDelete} className="btn-entry btn-delete">
+            <button
+              onClick={() => handleDelete(idx)}
+              className="btn-entry btn-delete"
+            >
               <FiDelete />
             </button>
           </td>
