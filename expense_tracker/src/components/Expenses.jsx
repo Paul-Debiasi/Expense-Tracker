@@ -4,15 +4,15 @@ import PieChart from "./PieChart";
 import BarChart from "./BarChart";
 import { ExpenseContext } from "./Context";
 import "./Expenses.scss";
-import { Switch, Route, useLocation, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 export default function Expenses() {
 	const { expense } = useContext(ExpenseContext);
 
-	const calcBudget = expense.reduce((acc, item) => {
-		if (item.expenses) {
+	const calcBudget = expense?.reduce((acc, item) => {
+		if (item.expenses === true) {
 			return (acc -= item.amount);
-		} else if (!item.expenses) {
+		} else if (item.expenses === false) {
 			return (acc += item.amount);
 		}
 		return acc;
@@ -105,18 +105,18 @@ export default function Expenses() {
 
 				<div className='ExpensesChart'></div>
 				{/* <ExpenseContextProvider> */}
+
+				<PieChart
+					tot={calExpenses}
+					car={carExpenses}
+					house={houseExpenses}
+					groceries={groceriesExpenses}
+					leisure={leisureExpenses}
+					other={otherExpenses}
+				/>
+
 				<Switch>
-					<Route exact path='/'>
-						<PieChart
-							tot={calExpenses}
-							car={carExpenses}
-							house={houseExpenses}
-							groceries={groceriesExpenses}
-							leisure={leisureExpenses}
-							other={otherExpenses}
-						/>
-					</Route>
-					<Route exact path='/bar'>
+					<Route exact path='/expenses/bar'>
 						<BarChart
 							entries={calEntries}
 							tot={calExpenses}
@@ -129,7 +129,6 @@ export default function Expenses() {
 					</Route>
 				</Switch>
 			</div>
-			{/* </ExpenseContextProvider> */}
 		</div>
 	);
 }

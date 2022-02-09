@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.scss";
 import { useContext, useEffect } from "react";
 import { ExpenseContext } from "./components/Context";
@@ -5,7 +6,9 @@ import Overview from "./components/Overview";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import Expenses from "./components/Expenses";
+import { Switch, Route } from "react-router-dom";
 
+import EntryList from "./components/EntryList";
 function App() {
 	const timing = moment().format("LLLL");
 	const { expense, setExpense } = useContext(ExpenseContext);
@@ -91,10 +94,12 @@ function App() {
 			{
 				id: uuidv4(),
 				timing: timing,
-				category: "Other",
-				amount: 1000,
+
 				category: "Salary",
 				amount: 3000,
+				category: "Other",
+				amount: 1000,
+
 				expenses: false,
 			},
 		]);
@@ -102,8 +107,16 @@ function App() {
 	console.log("Expenses", expense);
 	return (
 		<div className='App'>
-			<Overview />
-			<Expenses />
+			<Switch>
+				<Route exact path='/'>
+					<Overview />
+					<EntryList />
+				</Route>
+
+				<Route exact path='/expenses'>
+					<Expenses />
+				</Route>
+			</Switch>
 		</div>
 	);
 }

@@ -12,146 +12,143 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 
 // import MDB components
 import {
-	MDBBtn,
-	MDBIcon,
-	MDBInputGroup,
-	MDBInputGroupText,
-	MDBInputGroupElement,
-	MDBInput,
+  MDBBtn,
+  MDBIcon,
+  MDBInputGroup,
+  MDBInputGroupText,
+  MDBInputGroupElement,
+  MDBInput,
 } from "mdb-react-ui-kit";
 
 // import kareem components
 import DropDown from "./UI/dropDown";
 
-// Import the fake data file
-import fakeData from "./fakeData.json";
+// import Dave component
+import EntryList from "./EntryList";
 
 // Change the setExpense to "set the selected stuff"
 
 // NOTE add button will send the selected data to other component using context
 
 export default function Overview() {
-	const { expense, setExpense } = useContext(ExpenseContext);
+  const { expense, setExpense } = useContext(ExpenseContext);
+  // set the user selected category from the dropDown menu
+  const [categorySelected, setCategorySelected] = useState("Category");
+  // set the state when the user select the category "Just to change the display name of the dropDown menu"
+  const [option, setOption] = useState("Please Select Option");
+  // set this isSelected to true only when the user select one of the options to activate the category
+  const [isSelected, setIsSelected] = useState(false);
+  // set the current date
+  const [date, setDate] = useState("");
+  // set amount
+  const [amount, setAmount] = useState(0);
 
-	// const timing = moment().format("LLLL");
+  // set the selected data an array contain one object "it might change to just object"
+  const [test, setTest] = useState([]);
 
-	// set the user selected category from the dropDown menu
-	const [categorySelected, setCategorySelected] = useState("Category");
-	// set the state when the user select the category "Just to change the display name of the dropDown menu"
-	const [option, setOption] = useState("Please Select Option");
-	// set this isSelected to true only when the user select one of the options to activate the category
-	const [isSelected, setIsSelected] = useState(false);
-	// set the current date
-	const [date, setDate] = useState("");
-	// set amount
-	const [amount, setAmount] = useState(0);
+  const [state, setState] = useState([]);
 
-	// set the selected data an array contain one object "it might change to just object"
-	const [test, setTest] = useState([]);
+  const expensesArray = ["House", "Car", "Leisure Time", "Groceries", "Other"];
+  const incomeArray = ["Salary", "Other"];
 
-	const [state, setState] = useState([]);
+  const [isExpenses, setIsExpenses] = useState();
 
-	const expensesArray = ["House", "Car", "Leisure Time", "Groceries", "Other"];
-	const incomeArray = ["Salary", "Other"];
+  // console.log('stateis:', state);
+  // const [amount, setAmount] = useState();
+  // const [currentDate, setCurrentDate] = useState();
 
-	const [isExpenses, setIsExpenses] = useState();
+  useEffect(() => {
+    setExpense([...expense, ...state]);
+  }, [state]);
 
-	// console.log('stateis:', state);
-	// const [amount, setAmount] = useState();
-	// const [currentDate, setCurrentDate] = useState();
+  let timing = moment().format("DD.MM.YYYY");
 
-	useEffect(() => {
-		setExpense([...expense, ...state]);
-	}, [state]);
+  console.log("Expenses", expense);
 
-	let timing = moment().format("DD.MM.YYYY, hh:hhA");
+  const categorySelectHandler = (e) => {
+    setCategorySelected(e);
+  };
 
-	console.log("Expenses", expense);
+  const setTestHandler = (e) => {
+    setTest([e]);
+  };
 
-	const categorySelectHandler = (e) => {
-		setCategorySelected(e);
-	};
+  const setDateHandler = (e) => {
+    setDate(e);
+  };
 
-	const setTestHandler = (e) => {
-		setTest([e]);
-	};
+  const setStateHandler = (e) => {
+    const oldData = [...state];
+    setState([...oldData, e]);
+  };
 
-	const setDateHandler = (e) => {
-		setDate(e);
-	};
+  console.log("State Now is ", state);
+  console.log("Date is", date);
 
-	const setStateHandler = (e) => {
-		const oldData = [...state];
-		setState([...oldData, e]);
-	};
-
-	console.log("State Now is ", state);
-	console.log("Date is", date);
-
-	return (
-		<div>
-			<section className='header'>
-				<Button variant='primary' size='lg' active className='mt-5'>
-					Expenses
-				</Button>
-				<h1 className='display-1'>Dashboard</h1>
-			</section>
-			<section className='d-flex justify-content-center  mt-5'>
-				<Dropdown className=''>
-					<DropdownButton
-						title={option}
-						variant='primary'
-						id='dropdown-basic'
-						onSelect={(e) => {
-							setIsSelected(true);
-							setOption(e);
-							// option === 'Expenses' ? console.log(option) : 0
-							if (e === "Expenses") setIsExpenses(true);
-							else if (e === "Income") setIsExpenses(false);
-						}}
-					>
-						<Dropdown.Item eventKey='Expenses'>Expenses</Dropdown.Item>
-						<Dropdown.Item eventKey='Income'>Income</Dropdown.Item>
-					</DropdownButton>
-				</Dropdown>
-				<Dropdown className='mx-3' onSelect={categorySelectHandler}>
-					<DropdownButton
-						title={categorySelected}
-						variant='success'
-						disabled={!isSelected}
-					>
-						{/* <Dropdown.Toggle variant="success" id="dropdown-basic">
+  return (
+    <div>
+      <section className="header">
+        <Button variant="primary" size="lg" active className="mt-5">
+          Expenses
+        </Button>
+        <h1 className="display-1">Dashboard</h1>
+      </section>
+      <section className="d-flex justify-content-center  mt-5">
+        <Dropdown className="">
+          <DropdownButton
+            title={option}
+            variant="primary"
+            id="dropdown-basic"
+            onSelect={(e) => {
+              setIsSelected(true);
+              setOption(e);
+              // option === 'Expenses' ? console.log(option) : 0
+              if (e === "Expenses") setIsExpenses(true);
+              else if (e === "Income") setIsExpenses(false);
+            }}
+          >
+            <Dropdown.Item eventKey="Expenses">Expenses</Dropdown.Item>
+            <Dropdown.Item eventKey="Income">Income</Dropdown.Item>
+          </DropdownButton>
+        </Dropdown>
+        <Dropdown className="mx-3" onSelect={categorySelectHandler}>
+          <DropdownButton
+            title={categorySelected}
+            variant="success"
+            disabled={!isSelected}
+          >
+            {/* <Dropdown.Toggle variant="success" id="dropdown-basic">
           </Dropdown.Toggle> */}
-						{option === "Expenses"
-							? expensesArray.map((expense, idx) => {
-									return (
-										<DropDown
-											key={idx}
-											eventKey={expense}
-											onClick={() => {
-												setTestHandler(expense);
-											}}
-											option={expense}
-										/>
-									);
-							  })
-							: incomeArray.map((option, idx) => {
-									return (
-										<DropDown
-											key={idx}
-											eventKey={option}
-											onClick={() => {
-												setTestHandler(option);
-											}}
-											option={option}
-										/>
-									);
-							  })}
-					</DropdownButton>
-				</Dropdown>
+            {option === "Expenses"
+              ? expensesArray.map((expense, idx) => {
+                  return (
+                    <DropDown
+                      key={idx}
+                      eventKey={expense}
+                      onClick={() => {
+                        setTestHandler(expense);
+                      }}
+                      option={expense}
+                    />
+                  );
+                })
+              : incomeArray.map((option, idx) => {
+                  return (
+                    <DropDown
+                      key={idx}
+                      eventKey={option}
+                      onClick={() => {
+                        setTestHandler(option);
+                      }}
+                      option={option}
+                    />
+                  );
+                })}
+          </DropdownButton>
+        </Dropdown>
 
-				<div className='mx-3'>
-					{/* <MDBInput
+        <div className="mx-3">
+          {/* <MDBInput
             // label={!test ? "Date" : test?.timing}
             label={"Date"}
             placeholder="DD.MM.YY"
@@ -160,61 +157,49 @@ export default function Overview() {
             onChange={(e) => setDate(e.target.value)}
             // disabled
           /> */}
-					<MDBInputGroup className='mb-3'>
-						<MDBInputGroupElement
-							type='text'
-							// placeholder="Recipient's username"
-							// label={!test ? "Date" : test?.timing}
-							label={"Date"}
-							placeholder={date ? date : "DD.MM.YY"}
-							id='formControlDisabled'
-							type='text'
-							onChange={(e) => setDate(e.target.value)}
-							// disabled
-						/>
-						<MDBBtn outline onClick={() => setDate(timing)}>
-							Today
-						</MDBBtn>
-					</MDBInputGroup>
-				</div>
-				<div className='mx-3'>
-					<MDBInput
-						label={"Amount"}
-						id='formControlDisabled'
-						type='text'
-						onChange={(e) => setAmount(Number(e.target.value))}
-						// disabled={option !== "Income"}
-					/>
-				</div>
-				<MDBBtn
-					onClick={() => {
-						setStateHandler({
-							id: uuidv4(),
-							timing: date,
-							amount: amount,
-							category: categorySelected,
-							expenses: isExpenses,
-						});
-					}}
-				>
-					Add
-				</MDBBtn>
-			</section>
-			<section className='container'>
-				{state.map((item, idx) => {
-					return (
-						<section
-							key={idx}
-							className='row my-5 '
-							style={{ border: "2px solid" }}
-						>
-							<div className='col'>{item.category}</div>
-							<div className='col text-center'>{item.timing}</div>
-							<div className='col text-center'>{item.amount}</div>
-						</section>
-					);
-				})}
-			</section>
-		</div>
-	);
+          <MDBInputGroup className="mb-3">
+            <MDBInputGroupElement
+              type="text"
+              // placeholder="Recipient's username"
+              // label={!test ? "Date" : test?.timing}
+              label={"Date"}
+              placeholder={date ? date : "DD.MM.YY"}
+              id="formControlDisabled"
+              type="text"
+              onChange={(e) => setDate(e.target.value)}
+              // disabled
+            />
+            <MDBBtn outline onClick={() => setDate(timing)} className="buttonKareem">
+              Today
+            </MDBBtn>
+          </MDBInputGroup>
+        </div>
+        <div className="mx-3">
+          <MDBInput
+            label={"Amount"}
+            id="formControlDisabled"
+            type="text"
+            onChange={(e) => setAmount(Number(e.target.value))}
+          />
+        </div>
+        <MDBBtn
+        className="buttonKareem"
+          onClick={() =>
+           {
+             setStateHandler({
+              id: uuidv4(),
+              timing: date,
+              amount: amount,
+              category: categorySelected,
+              expenses: isExpenses,
+            })}
+            
+        }
+          disabled={!(amount !== 0)}
+        >
+          Add
+        </MDBBtn>
+      </section>
+    </div>
+  );
 }
