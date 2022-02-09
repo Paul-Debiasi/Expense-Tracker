@@ -1,27 +1,23 @@
 table {
-  /*border: solid red 2px;*/
-  /*border-spacing: 10px;*/
-  margin: 0 auto;
+  margin: 50px auto 50px;
 }
 
 td {
-  /*border: solid orangered 1px;*/
   border-bottom: solid 2px #ddd;
   padding: 5px 20px;
 }
 
-button {
+.btn-entry {
   width: 35px;
   height: 30px;
   font-size: 16px;
   border: none;
   border-radius: 10px;
-  padding-top: 5px;
   color: whitesmoke;
   opacity: 0.4;
 }
 
-button:hover {
+.btn-entry:hover {
   opacity: 1;
 }
 

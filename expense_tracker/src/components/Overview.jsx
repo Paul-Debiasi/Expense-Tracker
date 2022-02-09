@@ -23,8 +23,8 @@ import {
 // import kareem components
 import DropDown from "./UI/dropDown";
 
-// Import the fake data file
-import fakeData from "./fakeData.json";
+// import Dave component
+import EntryList from "./EntryList";
 
 // Change the setExpense to "set the selected stuff"
 
@@ -120,6 +120,8 @@ export default function Overview() {
             variant="success"
             disabled={!isSelected}
           >
+            {/* <Dropdown.Toggle variant="success" id="dropdown-basic">
+          </Dropdown.Toggle> */}
             {option === "Expenses"
               ? expensesArray.map((expense, idx) => {
                   return (
@@ -149,6 +151,15 @@ export default function Overview() {
         </Dropdown>
 
         <div className="mx-3">
+          {/* <MDBInput
+            // label={!test ? "Date" : test?.timing}
+            label={"Date"}
+            placeholder="DD.MM.YY"
+            id="formControlDisabled"
+            type="text"
+            onChange={(e) => setDate(e.target.value)}
+            // disabled
+          /> */}
           <MDBInputGroup className="mb-3">
             <MDBInputGroupElement
               type="text"
@@ -161,7 +172,11 @@ export default function Overview() {
               onChange={(e) => setDate(e.target.value)}
               // disabled
             />
-            <MDBBtn outline onClick={() => setDate(timing)}>
+            <MDBBtn
+              outline
+              onClick={() => setDate(timing)}
+              className="buttonKareem"
+            >
               Today
             </MDBBtn>
           </MDBInputGroup>
@@ -176,34 +191,23 @@ export default function Overview() {
           />
         </div>
         <MDBBtn
-          onClick={() => {
-            setStateHandler({
-              id: uuidv4(),
-              timing: date,
-              amount: amount,
-              category: categorySelected,
-              expenses: isExpenses,
-            });
-          }}
+          className="buttonKareem"
+          onClick={
+            () => {
+              setStateHandler({
+                id: uuidv4(),
+                timing: date,
+                amount: amount,
+                category: categorySelected,
+                expenses: isExpenses,
+              });
+            }
+            // setExpense([...expense, ...state])
+          }
           disabled={!(amount !== 0)}
         >
           Add
         </MDBBtn>
-      </section>
-      <section className="container">
-        {state.map((item, idx) => {
-          return (
-            <section
-              key={idx}
-              className="row my-5 "
-              style={{ border: "2px solid" }}
-            >
-              <div className="col">{item.category}</div>
-              <div className="col text-center">{item.timing}</div>
-              <div className="col text-center">{item.amount}</div>
-            </section>
-          );
-        })}
       </section>
     </div>
   );
