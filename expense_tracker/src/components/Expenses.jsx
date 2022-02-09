@@ -1,12 +1,10 @@
 import { useContext } from "react";
+import ExpenseContextProvider from "./Context";
 import PieChart from "./PieChart";
 import BarChart from "./BarChart";
 import { ExpenseContext } from "./Context";
-import { BsFillHouseFill } from "react-icons/bs";
-import { AiFillCar } from "react-icons/ai";
-import { MdLocalGroceryStore } from "react-icons/md";
-import { FaUmbrellaBeach } from "react-icons/fa";
-import { Switch, Route, useLocation, Link } from "react-router-dom";
+import "./Expenses.scss";
+import { Switch, Route } from "react-router-dom";
 
 export default function Expenses() {
 	const { expense } = useContext(ExpenseContext);
@@ -81,51 +79,55 @@ export default function Expenses() {
 	}, 0);
 	return (
 		<div className='Expenses'>
-			<h2>Expenses</h2>
-			<div className='ExpenseReview'>
-				<h3>
-					Budget <span>{calcBudget} $</span>{" "}
-				</h3>
+			<div className='ExpensesContainer'>
+				<h2>Expenses</h2>
+				<div className='ExpenseReview'>
+					<h3>
+						Tot Budget :
+						<span style={{ color: calcBudget > 0 ? "#198754" : "#dc3545 " }}>
+							{calcBudget} €
+						</span>{" "}
+					</h3>
 
-				<h3>
-					Tot Expenses <span>{calExpenses} $</span>{" "}
-				</h3>
-				<h3>
-					Tot Entries <span>{calEntries} $</span>{" "}
-				</h3>
-			</div>
+					<h3>
+						Tot Expenses :
+						<span style={{ color: calExpenses > 0 ? "#198754" : "#dc3545 " }}>
+							{calExpenses} €
+						</span>{" "}
+					</h3>
+					<h3>
+						Tot Entries :
+						<span style={{ color: calEntries > 0 ? "#198754" : "#dc3545 " }}>
+							{calEntries} €
+						</span>{" "}
+					</h3>
+				</div>
 
-			<div className='ExpensesChart'></div>
-			<Switch>
-				<Route exact path='/'>
-					<PieChart tot={calExpenses} />
-				</Route>
-				<Route exact path='/bar'>
-					<BarChart entries={calEntries} />
-				</Route>
-			</Switch>
-
-			<div className='detailsReview'>
-				<ul>
-					<li>
-						<AiFillCar />
-						{carExpenses} $
-					</li>
-					<li>
-						{" "}
-						<BsFillHouseFill />
-						{houseExpenses} $
-					</li>
-					<li>
-						<MdLocalGroceryStore />
-						{groceriesExpenses} $
-					</li>
-					<li>
-						<FaUmbrellaBeach />
-						{leisureExpenses} $
-					</li>
-					<li>{`Other ${otherExpenses} $`}</li>
-				</ul>
+				<div className='ExpensesChart'></div>
+				{/* <ExpenseContextProvider> */}
+				<Switch>
+					<Route exact path='/'>
+						<PieChart
+							tot={calExpenses}
+							car={carExpenses}
+							house={houseExpenses}
+							groceries={groceriesExpenses}
+							leisure={leisureExpenses}
+							other={otherExpenses}
+						/>
+					</Route>
+					<Route exact path='/bar'>
+						<BarChart
+							entries={calEntries}
+							tot={calExpenses}
+							car={carExpenses}
+							house={houseExpenses}
+							groceries={groceriesExpenses}
+							leisure={leisureExpenses}
+							other={otherExpenses}
+						/>
+					</Route>
+				</Switch>
 			</div>
 		</div>
 	);

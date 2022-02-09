@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./App.scss";
 import { useContext, useEffect } from "react";
 import { ExpenseContext } from "./components/Context";
@@ -93,8 +93,12 @@ function App() {
 			{
 				id: uuidv4(),
 				timing: timing,
+
 				category: "Salary",
 				amount: 3000,
+				category: "Other",
+				amount: 1000,
+
 				expenses: false,
 			},
 		]);
