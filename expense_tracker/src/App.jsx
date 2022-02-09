@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import Expenses from "./components/Expenses";
 
+import EntryList from "./components/EntryList";
 function App() {
 	const timing = moment().format("LLLL");
 	const { expense, setExpense } = useContext(ExpenseContext);
@@ -102,6 +103,7 @@ function App() {
 	return (
 		<div className='App'>
 			<Overview />
+			<EntryList />
 			<Expenses />
 		</div>
 	);

@@ -17,7 +17,7 @@ function EntryList() {
     alert("[x] - Item deleted."); // for testing purpose
     //setExpense();
   }
-
+  console.log('EntryList before rendering');
   return (
     <table>
       {expense.reverse().map(({ id, timing, category, amount, expenses }) => (
