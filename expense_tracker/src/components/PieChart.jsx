@@ -94,7 +94,7 @@ export default function PieChart({
 	}, [expense]);
 	return (
 		<div>
-			<Link to={"/bar"} onClick={() => setShow(true)}>
+			<Link to={"/expenses/bar"} onClick={() => setShow(true)}>
 				{" "}
 				Bar chart
 			</Link>

@@ -105,18 +105,18 @@ export default function Expenses() {
 
 				<div className='ExpensesChart'></div>
 				{/* <ExpenseContextProvider> */}
+
+				<PieChart
+					tot={calExpenses}
+					car={carExpenses}
+					house={houseExpenses}
+					groceries={groceriesExpenses}
+					leisure={leisureExpenses}
+					other={otherExpenses}
+				/>
+
 				<Switch>
-					<Route exact path='/'>
-						<PieChart
-							tot={calExpenses}
-							car={carExpenses}
-							house={houseExpenses}
-							groceries={groceriesExpenses}
-							leisure={leisureExpenses}
-							other={otherExpenses}
-						/>
-					</Route>
-					<Route exact path='/bar'>
+					<Route exact path='/expenses/bar'>
 						<BarChart
 							entries={calEntries}
 							tot={calExpenses}

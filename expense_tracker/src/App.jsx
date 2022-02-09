@@ -6,6 +6,7 @@ import Overview from "./components/Overview";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import Expenses from "./components/Expenses";
+import { Switch, Route } from "react-router-dom";
 
 import EntryList from "./components/EntryList";
 function App() {
@@ -106,9 +107,16 @@ function App() {
 	console.log("Expenses", expense);
 	return (
 		<div className='App'>
-			<Overview />
-			<EntryList />
-			<Expenses />
+			<Switch>
+				<Route exact path='/'>
+					<Overview />
+					<EntryList />
+				</Route>
+
+				<Route exact path='/expenses'>
+					<Expenses />
+				</Route>
+			</Switch>
 		</div>
 	);
 }
