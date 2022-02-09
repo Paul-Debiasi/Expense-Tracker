@@ -26,7 +26,6 @@ const useResizeObserver = (ref) => {
 	return dimensions;
 };
 
-
 export default function BarChart({
 	entries,
 	tot,
@@ -64,11 +63,10 @@ export default function BarChart({
 
 	useEffect(() => {
 		setChartData([...amountCount]);
-	}, [expense]);
+	}, []);
 
 	useEffect(() => {
 		const DrawChart = () => {
-			setChartData([...amountCount]);
 			const svg = d3.select(svgRef.current);
 			const findMax = chartData.map((item) => item.amount);
 			let max = Math.max(...findMax);
@@ -117,12 +115,8 @@ export default function BarChart({
 				.attr("fill", (d, i) => color([i]));
 		};
 
-		
 		DrawChart();
-
 	}, [chartData]);
-
-		
 
 	return (
 		<div className='BarChart'>
